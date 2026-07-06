@@ -1,5 +1,31 @@
 # personal-kanban-task-tracker
 - Personal cli tool to track tasks and manage your to-do list.
+- Inspired by Toyota executive Taiichi Ohno (1912–90)
+
+- Two basic rules:
+    - Be transparent to yourself (and others), whhat you’re planning to do, what you’re doing right now, what you’ve already done.
+    - Parcel big tasks into smaller more manageable subtasks right away. (Plan less, do more.)
+
+- For each task track three states labeled:
+	- `‘To do’`.
+	- `‘Doing’`.
+	- `‘Done’`.
+
+- Briefly ask yourself, about each subtask: 
+	- how long will it take? 
+	- Can I do it myself?
+	- do I need help? 
+	- Is it more urgent than any of the others?
+
+- The app helps you visualize the workflow, so as soon as you have started working on a task, mark it as ‘Doing/in-progress’.
+- When the task is complete, mark it as ‘Done’.
+- Now you’re on a roll. You have switched from planning to doing!
+
+- OneMoreRule!:
+    - You’re only allowed a limited number of active in-progress tasks - ‘work in progress (WIP) limit’. 
+    - It’s especially important that you keep your WIP limit for the ‘Doing/in-progress’ column to a minimum, perhaps no more than three tasks.
+    - This helps focus all resources on completing the task in hand, rather than remembering all the open ones.
+	- A small number of finished subtasks is more useful than lots of half-done ones.
 
 ---
 
