@@ -1,23 +1,20 @@
 
-from app.cli.cli import Cli
-from app.repository.postgres_repo import PostgresRepository
-from app.service.task_manager import TaskManager
-from app.cli.argument_parser import ArgumentParser
+import typer
+from app.commands.add_task import app as add
+from app.commands.list_task import app as list
+from app.commands.delete_task import app as delete
+from app.commands.mark_task import app as mark
+from app.commands.update_task import app as update
 
-#from app.todo_app import CLI, TaskRepository, TaskManager, ArgumentParser
-def main():
+app = typer.Typer()
 
-    repository = PostgresRepository()
-
-    service = TaskManager(repository)
-
-    parser = ArgumentParser()
-
-    cli = Cli(parser, service)
-    
-    cli.run()
+app.add_typer(add)
+app.add_typer(list)
+app.add_typer(delete)
+app.add_typer(mark)
+app.add_typer(update)
 
 if __name__ == "__main__":
-    main()
+    app()
 
 

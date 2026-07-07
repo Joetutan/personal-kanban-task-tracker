@@ -11,4 +11,4 @@ dependencies = [
 ]
 
 [project.scripts]
-todo = "app.main:main"
+kanban = "app.main:app"

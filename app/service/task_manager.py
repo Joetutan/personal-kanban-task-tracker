@@ -1,24 +1,33 @@
-from app.repository.task_repository import TaskRepository
-#from app.models.task import Task
-#from app.models.task import TaskStatus
+from app.repository.tasks_repository import TasksRepository
+from app.models.task_model import Task
+from app.models.task_model import TaskStatus
 
 # service class
 class TaskManager: 
 
-    def __init__(self, repository: TaskRepository):
+    def __init__(self, repository: TasksRepository):
         self.repository = repository
 
-    def add(self,title):
-        self.repository.add(title)
+    def add(self,title:str) -> Task:
+        task = Task(id=0,title=title,status="TODO")
+        return self.repository.add(task)
     
-    def update(self, task_id, title):
-        self.repository.update(task_id, title)
-    
-    def mark(self, status, task_id):
-        self.repository.mark(task_id,status)
-    
-    def list(self, status):
+    def list(self, status: TaskStatus | None) -> list[Task]:
         return self.repository.list(status)
     
-    def delete(self, task_id):
-        self.repository.delete(task_id)
+    def delete(self, id:int) -> str:
+        return self.repository.delete(id)
+    
+    def delete_tasks(self, status:TaskStatus) -> str:
+        return self.repository.delete_tasks(status)
+
+    def update(self, id:int, title:str) -> Task:
+        task = Task(id=id, title=title, status="")
+        return self.repository.update(task)
+    
+    def mark(self, task_id: int, status:TaskStatus) -> str:
+        return self.repository.mark(task_id,status)
+    
+   
+    
+    

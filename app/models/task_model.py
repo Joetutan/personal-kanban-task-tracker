@@ -1,9 +1,9 @@
 from enum import Enum
 
 class TaskStatus(Enum):
-        DONE = "DONE"
-        IN_PROGRESS = "IN_PROGRESS"
-        TODO = "TODO"
+        DONE = "done"
+        IN_PROGRESS = "in_progress"
+        TODO = "todo"
 
 # data model class
 class Task:

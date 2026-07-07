@@ -1,6 +1,6 @@
 
-from app.repository.task_repository import TaskRepository
 from app.models.task_model import Task
+from app.models.task_model import TaskStatus
 import psycopg
 from dotenv import load_dotenv
 import os
@@ -9,7 +9,7 @@ load_dotenv()
 
 
 
-class PostgresRepository(TaskRepository):
+class TasksRepository:
 
     def connection(self):
            return psycopg.connect(host=os.getenv("DB_HOST"),
@@ -18,8 +18,7 @@ class PostgresRepository(TaskRepository):
                                password=os.getenv("DB_PASSWORD"),
                                ) 
    
-    def add(self, title):
-        task = Task(id=0, title=title, status="TODO")
+    def add(self, task: Task):
         try:
             with self.connection() as conn:
                 with conn.cursor() as cur:
@@ -27,22 +26,25 @@ class PostgresRepository(TaskRepository):
                             """
                             INSERT INTO tasks(title)
                             VALUES (%s)
+                            RETURNING id
                             """,
                             (task.title,)
                         )
+                        task.id = cur.fetchone()[0]
                 conn.commit()
+                return task
         except Exception as e:
                print(f"Error: {e}")
         
-    def list(self, status):
-        
+    def list(self, status: TaskStatus | None) -> list[Task]:
+
         query = """
                     SELECT id, title, status FROM tasks
                 """
         param = []
         if status is not None:
             query += """ WHERE status=%s """
-            param = [status.value]
+            param = [status]
         
         try:
             with self.connection() as conn:
@@ -54,7 +56,7 @@ class PostgresRepository(TaskRepository):
         except Exception as e:
                print(f"Error: {e}")
 
-    def mark(self, id,status):
+    def mark(self, id:int,status:TaskStatus):
         try:
             with self.connection() as conn:
                 with conn.cursor() as cur:
@@ -64,13 +66,14 @@ class PostgresRepository(TaskRepository):
                                 SET status =%s
                                 WHERE id=%s
                             """,
-                            (status.value, id)
+                            (status, id)
                         )
                         conn.commit()
+                        return "Task status update successfully completed"
         except Exception as e:
-               print(f"Error: {e}")
+               return f"Error: {e}"
 
-    def update(self, id, title):
+    def update(self, task:Task) -> Task:
         try:
             with self.connection() as conn:
                 with conn.cursor() as cur:
@@ -79,16 +82,19 @@ class PostgresRepository(TaskRepository):
                                 UPDATE tasks 
                                 SET title = %s
                                 WHERE id=%s
+                                RETURNING id, title, status
                             """,
-                            (title,id)
+                            (task.title,task.id)
                         )
+                        task.id, task.title, task.status = cur.fetchone()
                         conn.commit()
+                        return task
         except Exception as e:
                print(f"Error: {e}")
 
-    def delete(self, id):
-        try:
+    def delete(self, id:int) -> str:
         
+        try:
             with self.connection() as conn:
                 with conn.cursor() as curr:
                         curr.execute(
@@ -97,7 +103,21 @@ class PostgresRepository(TaskRepository):
                                 """,
                                 (id,)
                         )
+                        return "Task deleted successfully"
         except Exception as e:
-               print(f"Error: {e}")
+               return f"Error: {e}"
     
-    
+    def delete_tasks(self, status: TaskStatus) -> str:
+         
+        try:
+            with self.connection() as conn:
+                with conn.cursor() as curr:
+                        curr.execute(
+                                """
+                                DELETE FROM tasks WHERE status=%s
+                                """,
+                                (status,)
+                        )
+                        return "Tasks deleted successfully"
+        except Exception as e:
+               return f"Error: {e}"
