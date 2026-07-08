@@ -8,7 +8,7 @@ class TaskStatus(Enum):
 # data model class
 class Task:
 
-    def __init__(self, id, title, status: TaskStatus):
+    def __init__(self, id:int, title:str, status: TaskStatus):
         self.id = id
         self.title = title
         self.status = status

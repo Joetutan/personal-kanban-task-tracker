@@ -23,6 +23,5 @@ def update(id: Annotated[int , typer.Option("-i", "--id", help=" task by id")],
     repo = TasksRepository()
     response = TaskManager(repo)
     task = response.update(id,title)
-    print(task)
     table.add_row(f"{task.id}", f"{task.title}", f"{task.status}")
     console.print(table)

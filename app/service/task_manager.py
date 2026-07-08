@@ -25,9 +25,7 @@ class TaskManager:
         task = Task(id=id, title=title, status="")
         return self.repository.update(task)
     
-    def mark(self, task_id: int, status:TaskStatus) -> str:
-        return self.repository.mark(task_id,status)
-    
-   
-    
-    
+    def mark(self, id: int, status:TaskStatus) -> Task:
+        task = Task(id=id, title="", status=status)
+        return self.repository.mark(task)
+

@@ -56,7 +56,7 @@ class TasksRepository:
         except Exception as e:
                print(f"Error: {e}")
 
-    def mark(self, id:int,status:TaskStatus):
+    def mark(self, task:Task) -> Task:
         try:
             with self.connection() as conn:
                 with conn.cursor() as cur:
@@ -65,11 +65,13 @@ class TasksRepository:
                                 UPDATE tasks 
                                 SET status =%s
                                 WHERE id=%s
+                                RETURNING id, title, status
                             """,
-                            (status, id)
+                            (task.status, task.id)
                         )
+                        task.id, task.title, task.status = cur.fetchone()
                         conn.commit()
-                        return "Task status update successfully completed"
+                        return task
         except Exception as e:
                return f"Error: {e}"
 

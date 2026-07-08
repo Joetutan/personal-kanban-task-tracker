@@ -75,6 +75,7 @@ todo list
 - List done - list all tasks with status set to done.
 - List to-do - list all tasks with status set to to-do.
 - List in-progress - list all tasks with status set to in-progress.
+![alt text](image.png)
 ```
 todo list done
 todo list todo
@@ -83,8 +84,10 @@ todo list in-progress
 
 ---
 
-
 ## Example
+
+![alt text](image.png)
+
 ```bash
 # Adding a new task
 todo add "Buy groceries"
