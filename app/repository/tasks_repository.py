@@ -94,7 +94,7 @@ class TasksRepository:
         except Exception as e:
                print(f"Error: {e}")
 
-    def delete(self, id:int) -> str:
+    def delete(self, id:int) :
         
         try:
             with self.connection() as conn:
@@ -105,11 +105,11 @@ class TasksRepository:
                                 """,
                                 (id,)
                         )
-                        return "Task deleted successfully"
+                        
         except Exception as e:
-               return f"Error: {e}"
+               return e
     
-    def delete_tasks(self, status: TaskStatus) -> str:
+    def delete_tasks(self, status: TaskStatus):
          
         try:
             with self.connection() as conn:
@@ -120,6 +120,6 @@ class TasksRepository:
                                 """,
                                 (status,)
                         )
-                        return "Tasks deleted successfully"
+                        
         except Exception as e:
-               return f"Error: {e}"
+               return e

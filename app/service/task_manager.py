@@ -15,10 +15,10 @@ class TaskManager:
     def list(self, status: TaskStatus | None) -> list[Task]:
         return self.repository.list(status)
     
-    def delete(self, id:int) -> str:
+    def delete(self, id:int):
         return self.repository.delete(id)
     
-    def delete_tasks(self, status:TaskStatus) -> str:
+    def delete_tasks(self, status:TaskStatus):
         return self.repository.delete_tasks(status)
 
     def update(self, id:int, title:str) -> Task:

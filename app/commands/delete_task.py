@@ -1,6 +1,5 @@
 import typer
-from rich.table import Table
-from rich.console import Console
+from app.commands.cli_renderer import Cli
 from typing import Annotated
 from app.models.task_model import TaskStatus
 from app.service.task_manager import TaskManager
@@ -8,7 +7,7 @@ from app.repository.tasks_repository import TasksRepository
 
 app = typer.Typer()
 
-console = Console()
+cli = Cli()
 
 @app.command()
 def delete(id: Annotated[int | None, typer.Option("-i", "--id", help="delete task by id")]=None,
@@ -26,5 +25,5 @@ def delete(id: Annotated[int | None, typer.Option("-i", "--id", help="delete tas
         message = response.delete(id)
     else:
         message = response.delete_tasks(status)
-
-    console.print(message)
+    if message: 
+        cli.render(message)
