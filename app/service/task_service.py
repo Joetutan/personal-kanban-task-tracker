@@ -1,9 +1,8 @@
+from app.models.task_model import Task, TaskStatus
 from app.repository.tasks_repository import TasksRepository
-from app.models.task_model import Task
-from app.models.task_model import TaskStatus
 
-# service class
-class TaskManager: 
+
+class TaskService: 
 
     def __init__(self, repository: TasksRepository):
         self.repository = repository
